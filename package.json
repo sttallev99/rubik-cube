@@ -20,7 +20,9 @@
   "homepage": "https://github.com/sttallev99/rubik-cube#readme",
   "dependencies": {
     "express": "^4.18.1",
-    "express-handlebars": "^6.0.6",
+    "express-handlebars": "^6.0.6"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.19"
   }
 }
