@@ -13,6 +13,8 @@ const getAll = () => Cube.cubes
 
 const getOneCube = (id) => Cube.cubes.find(x => x.id === id);
 
+const search = (text, from, to) => Cube.cubes.filter(x => x.name.toLowerCase().includes(text.toLowerCase()));
+
 const create = (name, description, imageUrl, difficulty) => {
     let cube = new Cube(name, description, imageUrl, difficulty);
 
@@ -22,7 +24,8 @@ const create = (name, description, imageUrl, difficulty) => {
 const cubeService = {
     create,
     getAll,
-    getOneCube
+    getOneCube,
+    search
 }
 
 module.exports = cubeService;
