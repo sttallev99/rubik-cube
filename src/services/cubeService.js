@@ -1,21 +1,11 @@
 const { text } = require('express');
 const Cube = require('../models/Cube');
 
-const cubeDb = [
-    {
-        name: 'Budy',
-        description: 'Budy Description',
-        imageUrl: 'dfsd',
-        difficulty: '6'
-    }
-];
-
-const getAll = () => Cube.cubes
-
-const getOneCube = (id) => Cube.cubes.find(x => x.id === id);
+const getAll = async() => await Cube.find({}).lean();
+const getOneCube = async(id) => await Cube.findById(id).lean();
 
 const search = (text, from, to) => {
-    let result = Cube.cubes;
+    let result = getAll();
     console.log(result)
 
     if(text) {
@@ -34,9 +24,15 @@ const search = (text, from, to) => {
     
 }
 
-const create = (name, description, imageUrl, difficulty) => {
-    let cube = new Cube(name, description, imageUrl, difficulty);
-    Cube.add(cube);
+const create = async(name, description, imageUrl, difficulty) => {
+    let cube = new Cube({
+        name,
+        description,
+        imageUrl,
+        difficulty
+    });
+    
+    return await cube.save();
 }
 
 const cubeService = {

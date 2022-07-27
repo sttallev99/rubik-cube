@@ -13,15 +13,15 @@ const CubeSchema = new mongoose.Schema({
     imageUrl: {
         type: String,
         required: true,
-        //validate: /^https?:\/\//i
+        // validate: [/^https?:\/\//i, 'invalid image URL']
         validate: {
             validator: function(value) {
                 return /^https?:\/\//i.test(value);
             },
-            message: 'Image URL is invalid!'
+            message: (props) => `Image URL ${props.value} is invalid!`
         }
     },
-    difficutyLevel: {
+    difficulty: {
         type: Number,
         required: true,
         min: 1,
