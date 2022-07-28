@@ -8,12 +8,18 @@ const accessorySchema = new mongoose.Schema({
     imageUrl: {
         type: String,
         requred: [true, 'Image URL is required!'],
-        validate: [/^https?\/\//i, 'image URL is invalid!']
+        //validate: [/^https?\/\//i, 'image URL is invalid!']
+        validate: {
+            validator: function(value) {
+                return /^https?:\/\//i.test(value);
+            },
+            message: (props) => `Image URL ${props.value} is invalid!`
+        }
     },
     description: {
         type: String,
         required: true,
-        maxLength: 100
+        maxLength: 500
     }
 });
 
