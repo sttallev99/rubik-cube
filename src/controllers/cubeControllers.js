@@ -1,6 +1,7 @@
 const express = require('express');
 
 const cubeService = require('../services/cubeService');
+const cubeAccessoryController = require('./cubeAccessoryController');
 
 const router = express.Router();
 
@@ -29,6 +30,7 @@ const createCube = async(req, res) => {
 
 router.get('/create', getCreateCubePage);
 router.post('/create', createCube);
-router.get('/:id', getCubeDetails)
+router.get('/:id', getCubeDetails);
+router.use('/:id/accessory', cubeAccessoryController);
 
 module.exports = router;
