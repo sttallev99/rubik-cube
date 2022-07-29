@@ -11,6 +11,7 @@ const getCreateCubePage = (req, res) => {
 
 const getCubeDetails = async(req, res) => {
     let cube = await cubeService.getOneCube(req.params.id);
+
     res.render('cube/details', cube);
 }
 

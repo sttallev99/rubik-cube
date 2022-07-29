@@ -2,7 +2,7 @@ const Cube = require('../models/Cube');
 const Accessory = require('../models/Accessory');
 
 const getAll = async() => await Cube.find({}).lean();
-const getOneCube = async(id) => await Cube.findById(id).lean();
+const getOneCube = async(id) => await Cube.findById(id).populate('accessories').lean();
 
 const search = (text, from, to) => {
     let result = getAll();
