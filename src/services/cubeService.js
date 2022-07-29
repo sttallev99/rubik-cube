@@ -5,8 +5,8 @@ const getAll = async() => await Cube.find({}).lean();
 const getOneWithDetails = async(id) => await Cube.findById(id).populate('accessories').lean();
 const getOne = async(id) => await Cube.find(id).lean();
 
-const search = (text, from, to) => {
-    let result = getAll();
+const search = async (text, from, to) => {
+    let result = await getAll();
     console.log(result)
 
     if(text) {
