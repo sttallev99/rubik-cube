@@ -1,5 +1,5 @@
-const { text } = require('express');
 const Cube = require('../models/Cube');
+const Accessory = require('../models/Accessory');
 
 const getAll = async() => await Cube.find({}).lean();
 const getOneCube = async(id) => await Cube.findById(id).lean();
@@ -35,11 +35,21 @@ const create = async(name, description, imageUrl, difficulty) => {
     return await cube.save();
 }
 
+const attachAccessory = async(cubeId, accessoryId) => {
+    let cube = await Cube.findById(cubeId);
+    const accessory = await Accessory.findById(accessoryId);
+
+    cube.accessories.push(accessory)
+
+    return cube.save();
+}
+
 const cubeService = {
     create,
     getAll,
     getOneCube,
-    search
+    search,
+    attachAccessory
 }
 
 module.exports = cubeService;
