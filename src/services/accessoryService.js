@@ -9,7 +9,8 @@ async function create(name, imageUrl, description) {
 }
 
 async function getAllWithout(accessoryIds) {
-    return await Accessory.find({_id: {$nin: accessoryIds }}).lean();
+    //return await Accessory.find({_id: {$nin: accessoryIds }}).lean();
+    return await Accessory.find().where('_id').nin(accessoryIds).lean();
 }
 
 const accessoryService = {
