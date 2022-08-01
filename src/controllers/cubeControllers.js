@@ -1,7 +1,10 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 
 const cubeService = require('../services/cubeService');
 const cubeAccessoryController = require('./cubeAccessoryController');
+const { TOKEN_COOKIE_NAME, SECRET } = require('../constants');
+
 
 const router = express.Router();
 
@@ -20,6 +23,9 @@ const getEditCubePage = (req, res) => {
 }
 
 const getDeleteCubePage = (req, res) => {
+    if(!req.user) {
+        return res.redirect('/login')
+    }
     res.render('cube/delete');
 }
 
@@ -39,9 +45,9 @@ const createCube = async(req, res) => {
 
 router.get('/create', getCreateCubePage);
 router.post('/create', createCube);
+router.get('/edit', getEditCubePage);
+router.get('/delete', getDeleteCubePage);
 router.get('/:id', getCubeDetails);
 router.use('/:id/accessory', cubeAccessoryController);
-router.get('/:id/edit', getEditCubePage);
-router.get('/:id/delete', getDeleteCubePage);
 
 module.exports = router;
