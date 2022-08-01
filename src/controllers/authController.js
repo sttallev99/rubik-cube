@@ -15,13 +15,15 @@ router.post('/login', async (req, res) => {
 
     const user = await authService.login(username, password);
 
+    if(!user) {
+        return res.redirect('/404');
+    }
+
     console.log(user)
 
-    if(user) {
-        res.redirect('/');
-    } else {
-        res.redirect('/404');
-    }
+    const token =  await authService.createToken(user);
+    console.log(token);
+    res.redirect('/')
 
 });
 
