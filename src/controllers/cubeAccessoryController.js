@@ -1,7 +1,10 @@
 const router = require('express').Router({ mergeParams: true });
+const { isAuth } = require('../middlewares/authMiddleware');
 
 const cubeService = require('../services/cubeService');
 const accessoryService = require('../services/accessoryService');
+
+router.use(isAuth);
 
 router.get('/add', async(req, res) => {
 

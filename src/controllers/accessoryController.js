@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const accessoryService = require('../services/accessoryService');
+const { isAuth } = require('../middlewares/authMiddleware');
 
+router.use(isAuth)
 router.get('/create', (req, res) => {
     res.render('accessory/create')
 });

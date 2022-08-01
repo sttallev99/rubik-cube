@@ -3,7 +3,8 @@ const Accessory = require('../models/Accessory');
 
 const getAll = async() => await Cube.find({}).lean();
 const getOneWithDetails = async(id) => await Cube.findById(id).populate('accessories').lean();
-const getOne = async(id) => await Cube.find(id).lean();
+const getOne = async(id) => await Cube.findById(id).lean();
+const deleteCube = (id) => Cube.findByIdAndDelete(id);
 
 const search = async (text, from, to) => {
     let result = await getAll();
@@ -51,7 +52,8 @@ const cubeService = {
     getOneCube: getOneWithDetails,
     getOne,
     search,
-    attachAccessory
+    attachAccessory,
+    deleteCube
 }
 
 module.exports = cubeService;

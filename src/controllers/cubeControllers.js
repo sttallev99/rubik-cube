@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const cubeService = require('../services/cubeService');
 const cubeAccessoryController = require('./cubeAccessoryController');
-const { TOKEN_COOKIE_NAME, SECRET } = require('../constants');
+const { isAuth } = require('../middlewares/authMiddleware');
 
 
 const router = express.Router();
@@ -22,11 +22,19 @@ const getEditCubePage = (req, res) => {
     res.render('cube/edit');
 }
 
-const getDeleteCubePage = (req, res) => {
-    if(!req.user) {
-        return res.redirect('/login')
+const getDeleteCubePage = async(req, res) => {
+    let cube = await cubeService.getOne(req.params.id);
+    res.render('cube/delete', cube);
+}
+
+const postDeleteCubePage = async(req, res) => {
+    try{
+        await cubeService.deleteCube(req.params.id);
+
+        res.redirect('/');
+    }catch(err) {
+        res.status(400).send(err.message).end();
     }
-    res.render('cube/delete');
 }
 
 const createCube = async(req, res) => {
@@ -43,11 +51,13 @@ const createCube = async(req, res) => {
 
 };
 
-router.get('/create', getCreateCubePage);
-router.post('/create', createCube);
-router.get('/edit', getEditCubePage);
-router.get('/delete', getDeleteCubePage);
+router.get('/create', isAuth, getCreateCubePage);
+router.post('/create',isAuth, createCube);
 router.get('/:id', getCubeDetails);
+router.get('/:id/edit', isAuth, getEditCubePage);
+router.get('/:id/delete',isAuth, getDeleteCubePage);
+router.post('/:id/delete',isAuth, postDeleteCubePage);
+
 router.use('/:id/accessory', cubeAccessoryController);
 
 module.exports = router;
