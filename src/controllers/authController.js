@@ -6,14 +6,23 @@ router.get('/login', (req, res) => {
     res.render('auth/login');
 });
 
-router.get('/register', (req, res) => {
+router.get('/register', async(req, res) => {
     res.render('auth/register')
 });
 
-router.post('/login', (req, res) => {
-    console.log(req.body);
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
 
-    res.redirect('/login');
+    const user = await authService.login(username, password);
+
+    console.log(user)
+
+    if(user) {
+        res.redirect('/');
+    } else {
+        res.redirect('/404');
+    }
+
 });
 
 router.post('/register', async(req, res) => {
