@@ -7,6 +7,7 @@ router.get('/add', async(req, res) => {
 
     const cube = await cubeService.getOneCube(req.params.id);
     const accessories = await accessoryService.getAllWithout(cube.accessories.map(x => x._id.valueOf()));
+    console.log(accessories)
     res.render('cube/accessory/add', {cube, accessories});
 });
 

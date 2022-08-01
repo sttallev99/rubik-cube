@@ -15,6 +15,14 @@ const getCubeDetails = async(req, res) => {
     res.render('cube/details', cube);
 }
 
+const getEditCubePage = (req, res) => {
+    res.render('cube/edit');
+}
+
+const getDeleteCubePage = (req, res) => {
+    res.render('cube/delete');
+}
+
 const createCube = async(req, res) => {
     let { name, description, imageUrl, difficulty } = req.body;
 
@@ -33,5 +41,7 @@ router.get('/create', getCreateCubePage);
 router.post('/create', createCube);
 router.get('/:id', getCubeDetails);
 router.use('/:id/accessory', cubeAccessoryController);
+router.get('/:id/edit', getEditCubePage);
+router.get('/:id/delete', getDeleteCubePage);
 
 module.exports = router;
