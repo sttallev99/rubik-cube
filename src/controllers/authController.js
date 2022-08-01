@@ -27,6 +27,8 @@ router.post('/login', async (req, res) => {
         httpOnly: true
     })
 
+    res.redirect('/')
+
 });
 
 router.post('/register', async(req, res) => {
