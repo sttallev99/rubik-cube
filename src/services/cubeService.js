@@ -5,7 +5,7 @@ const getAll = async() => await Cube.find({}).lean();
 const getOneWithDetails = async(id) => await Cube.findById(id).populate('accessories').lean();
 const getOne = async(id) => await Cube.findById(id).lean();
 const deleteCube = (id) => Cube.findByIdAndDelete(id);
-const updateCube = (id, updatedCube) => Cube.findByIdAndUpdate(id, updatedCube);
+const updateCube = (id, updatedCube) => Cube.findByIdAndUpdate(id, updatedCube, { runValidators: true });
 
 const search = async (text, from, to) => {
     let result = await getAll();
@@ -27,12 +27,13 @@ const search = async (text, from, to) => {
     
 }
 
-const create = async(name, description, imageUrl, difficulty) => {
+const create = async(name, description, imageUrl, difficulty, creatorId) => {
     let cube = new Cube({
         name,
         description,
         imageUrl,
-        difficulty
+        difficulty,
+        creator: creatorId 
     });
     
     return await cube.save();

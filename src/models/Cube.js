@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 const CubeSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        validate: [/^[a-zA-Z0-9]+$/, 'Cube name should consists of english letters, digits and spaces'],
     },
     description: {
         type: String,
         required: true,
-        maxlength: 500
+        maxlength: 500,
+        minlenght: 20
     },
     imageUrl: {
         type: String,
@@ -32,7 +34,11 @@ const CubeSchema = new mongoose.Schema({
             type: mongoose.Types.ObjectId,
             ref: 'Accessory'
         }
-    ]
+    ],
+    creator: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    }
 
 });
 
